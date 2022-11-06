@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Employee List</ion-title>
+    <ion-buttons slot="end">
+      <ion-button slot="end" fill="outline" shape="round" color="secondary" routerLink="add">
+        <ion-icon name="add" slot="icon-only" size="small"></ion-icon>
+        <ion-icon name="person-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-searchbar [(ngModel)]="searchTerm" name="searchTerm" placeholder="Search Employee"></ion-searchbar>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="12">
+        <ngx-datatable
+          class="material fullscreen"
+          [columnMode]="ColumnMode.force"
+          [headerHeight]="50"
+          [footerHeight]="50"
+          rowHeight="auto"
+          [scrollbarH]="true"
+          [limit]="lastIndex"
+          [rows]="empSearch()"
+          [loadingIndicator]="employees ? false: true"
+          [selectionType]="SelectionType.single"
+          (activate)="onTrigger($event)"
+          (tableContextmenu)="ctxMenu($event)"
+          >
+
+          <ngx-datatable-column style="text-align: center;" name="Username" prop="username" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="First Name" prop="firstName" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Last Name" prop="lastName" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Email" prop="email" [width]="240">
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Date of Birth" prop="birthDate" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value | date:'dd MMM yyyy'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Basic Salary" prop="basicSalary" [width]="240">
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value | currency:'Rp. ':'Rp. ':'1.2-2'}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Status" prop="status" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Group" prop="group" >
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Description" prop="description" [width]="400">
+            <ng-template ngx-datatable-cell-template let-value="value" >
+             {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column style="text-align: center;" name="Actions" [width]="240">
+            <ng-template ngx-datatable-cell-template let-row="row" >
+             
+              <ion-buttons>
+                <ion-button  shape="round" color="primary" fill="outline" expand="block" (click)="editButtonAlert(row)">
+                  <ion-icon slot="start" name="create-outline"></ion-icon>
+                  Edit
+                </ion-button>
+                <ion-button shape="round" color="danger" fill="solid" expand="block" (click)="deleteButtonAlert(row)">
+                  <ion-icon slot="start" name="trash-outline"></ion-icon>
+                  Delete
+                </ion-button>
+              </ion-buttons>
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+
+      </ion-col>
+
+      <ion-col size-lg="3" size-md="4" size-xs="12">
+        <ion-item lines="start">
+          <ion-label> Show data / page : </ion-label>
+          <ion-input color="primary" inputmode="numeric" type="number" min="1" max="100" maxlength="3" [(ngModel)]="lastIndex" name="lastIndex" (ionBlur)="!lastIndex ? lastIndex = 10: lastIndex"></ion-input>  
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  
+
+</ion-content>

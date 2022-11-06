@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add New Employee</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="employee"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-avatar style="border-radius: 50%;height: 180px;width: 180px;object-fit: cover;border: solid whitesmoke 10px;margin: 20px auto;" (click)="fileChooser.click()">
+          <ion-img *ngIf="!img && !chgPhoto" src="/assets/icon/default-user.svg"></ion-img>
+          <ion-img *ngIf="img && chgPhoto" src="{{img}}"></ion-img>
+          <ion-icon color="secondary" name="camera" style="margin-top:-2rem;float:right;font-size:2rem;"></ion-icon>
+        </ion-avatar>
+        <input type="file" #fileChooser accept="image/*" hidden/>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> First Name <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text"  [(ngModel)]="firstName"  name="firstName"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Last Name <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text"  [(ngModel)]="lastName"  name="lastName"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Username <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" minlength="4" [(ngModel)]="username"  name="username" (ionBlur)="checkUsername()"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Email <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input inputmode="email" required type="email"  [(ngModel)]="email"  name="email" [email]="true" (ionBlur)="checkEmail()"></ion-input>
+          <ion-note *ngIf="email" slot="error">*invalid email</ion-note>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+
+          <ion-label position="floating">Date of Birth</ion-label>
+          <ion-input type="text" value="{{birthDate | date:'EEEE, dd MMMM yyyy'}}"  name="birthDate" readOnly id="open-modal-birthDate"></ion-input>
+          
+          <ion-modal trigger="open-modal-birthDate">
+            <ng-template>
+              <ion-content>
+                <ion-datetime [max]="today" presentation="date" color="primary" [showDefaultButtons]="true" doneText="Set" cancelText="Cancel" size="cover" locale="id-ID" [showDefaultButtons]="true" [(ngModel)]="birthDate" name="birthDate">
+                  <span slot="title">DATE OF BIRTH</span>
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Basic Salary <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="number" [(ngModel)]="basicSalary" name="basicSalary" (ionBlur)="convertToRp()" [hidden]="!salaryEdit"></ion-input>
+          <ion-input readonly inputmode="numeric" type="text" [value]="basicSalaryinRp" [hidden]="salaryEdit" (click)="salaryEdit = true"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Status <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text"  [(ngModel)]="status"  name="status"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="6" size-md="6" size-xs="12">
+        <ion-item fill="outline" (click)="sgPop($event)">
+          <ion-label position="floating"> Group <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text" [(ngModel)]="group" name="group" readonly></ion-input>
+        </ion-item>
+        <ion-popover #sgPopover [isOpen]="sgPopIsOpen" (didDismiss)="sgPopIsOpen = false"  alignment="left" side="top" size="cover" keepContentsMounted="true" [dismissOnSelect]="false" trigger="group-pop" triggerAction="click">
+          <ng-template>
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-searchbar [(ngModel)]="searchGroupTerm" name="searchGroupTerm" placeholder="Search Group"></ion-searchbar>
+              </ion-toolbar>
+            </ion-header>
+
+            <ion-content>
+              <ion-list class="ion-padding">
+                <ion-item *ngFor="let group of groupSearch();" (click)="selectGroup(group)" button="true">
+                  <ion-label>{{group.groupName}}</ion-label>
+                  <ion-icon *ngIf="group?.selected" slot="end" name="checkmark" color="primary"></ion-icon>
+                </ion-item>
+                <ion-item *ngIf="searchGroupTerm !== null && groupSearch().length == 0">
+                  <ion-label>Group Not Found!</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      
+      </ion-col>
+      <ion-col size="12">
+        <ion-item fill="outline">
+          <ion-label position="floating"> Description <ion-text color="danger">*</ion-text></ion-label>
+          <ion-textarea required type="text" [autoGrow]="true" [(ngModel)]="description"  name="description">
+        </ion-textarea>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-footer class="ion-no-border ion-padding">
+
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-button color="danger" fill="outline" color="primary"  expand="block" (click)="cancel()">
+          Cancel
+        </ion-button>
+        <ion-button [disabled]="submited" fill="solid" color="secondary" expand="block" (click)="save()">
+          Save
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

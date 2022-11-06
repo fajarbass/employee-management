@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detail Employee</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="employee"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-avatar style="border-radius: 50%;height: 180px;width: 180px;object-fit: cover;border: solid whitesmoke 10px;margin: 20px auto;">
+          <ion-img *ngIf="emp?.photo === '-'" src="/assets/icon/default-user.svg"></ion-img>
+          <ion-img *ngIf="emp?.photo !== '-'" src="{{emp?.photo}}"></ion-img>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item >
+          <ion-label position="stacked" color="secondary"> First Name </ion-label>
+          <ion-text> {{emp?.firstName}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item >
+          <ion-label position="stacked" color="secondary"> Last Name </ion-label>
+          <ion-text> {{emp?.lastName}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item >
+          <ion-label position="stacked" color="secondary"> Username </ion-label>
+          <ion-text> {{emp?.username}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item >
+          <ion-label position="stacked" color="secondary"> Email </ion-label>
+          <ion-text> {{emp?.email}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item>
+          <ion-label position="stacked" color="secondary"> Date of Birth</ion-label>
+          <ion-text> {{emp?.birthDate | date:'EEEE, dd MMMM yyyy'}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item>
+          <ion-label position="stacked" color="secondary"> Basic Salary</ion-label>
+          <ion-text> {{emp?.basicSalary | currency:'Rp. ':'Rp. ':'1.2-2'}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item >
+          <ion-label position="stacked" color="secondary"> Status </ion-label>
+          <ion-text> {{emp?.status}} </ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="4" size-md="6" size-xs="12">
+        <ion-item>
+          <ion-label position="stacked" color="secondary"> Group </ion-label>
+          <ion-text> {{emp?.group}}</ion-text>
+        </ion-item>
+       
+      </ion-col>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked" color="secondary"> Description</ion-label>
+          <ion-text> {{emp?.description}}</ion-text>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-footer class="ion-no-border ion-padding">
+
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-button color="danger" fill="outline" color="primary"  expand="block" routerLink="/employee">
+          OK
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

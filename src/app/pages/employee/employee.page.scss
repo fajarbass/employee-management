@@ -1,0 +1,45 @@
+:host
+  ::ng-deep
+  .ngx-datatable.material.single-selection 
+  .datatable-body-row.active 
+  .datatable-row-group{
+    background-color: #ffc252;
+}
+
+:host
+  ::ng-deep
+  .ngx-datatable.material:not(.cell-selection)
+  .datatable-body-row:active
+  .datatable-row-group {
+  background: #ffc863;
+}
+
+::ng-deep {
+  .editAlert {
+    --background: var(--ion-color-warning);
+    .alert-title {
+      color: var(--ion-color-warning-contrast);
+    }
+    .alert-message {
+      color: var(--ion-color-warning-contrast);
+    }
+    .alert-button {
+      color: var(--ion-color-warning-contrast);
+    }
+  }
+  .deleteAlert {
+    --background: var(--ion-color-danger);
+    .alert-title {
+      color: var(--ion-color-danger-contrast);
+    }
+    .alert-message {
+      color: var(--ion-color-danger-contrast);
+    }
+    .alert-button {
+      color: var(--ion-color-danger-contrast);
+    }
+    
+  }
+
+}
+

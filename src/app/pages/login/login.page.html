@@ -1,0 +1,34 @@
+
+<ion-content class="ion-padding" color="light">
+
+  <ion-img src="/assets/icon/employes.svg" class="ion-padding center" style="height: 30vh;" ></ion-img>
+
+  <ion-card style="width: 320px;margin: auto;">
+    <form>
+      <ion-list class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Username/email <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required type="text"  [(ngModel)]="username"  name="username"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="stacked">Password <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required [type]="isTextFieldType ? 'text' : 'password'"  [(ngModel)]="password" name="password" ></ion-input>
+              <ion-icon class="ion-padding"  (click)="togglePasswordFieldType()" slot="end" [name]="isTextFieldType ? 'eye-off' : 'eye'"></ion-icon>
+        </ion-item>
+        <br><br>
+        <div>
+          <ion-button [disabled]="!username || !password" color="secondary" expand="block" shape="round" type="submit" class="ion-no-margin" (click)="signIn()" routerDirection="root">Login</ion-button>
+        </div>
+        <br>
+  
+      </ion-list>
+    </form>
+  </ion-card>
+
+  <div class="ion-text-center ion-padding">
+    <br>
+    <a (click)="forgot()">Forgot password?</a>
+  </div>
+  
+</ion-content>
